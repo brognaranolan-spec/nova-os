@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>N0VA.OS — l'atelier-bureau d'une artiste 3D | coques de briquets &amp; figurines faites main</title>
+<meta name="description" content="Le bureau virtuel de N0VA, artiste 3D : coques de briquets BIC et figurines imprimées en 3D, modélisées, imprimées et finies à la main. Séries limitées numérotées, vue 3D interactive sur chaque pièce.">
+<meta name="theme-color" content="#050507">
+<meta property="og:title" content="N0VA.OS — l'atelier-bureau d'une artiste 3D">
+<meta property="og:description" content="Coques de briquets et figurines imprimées en 3D, faites main. Explore le bureau, ouvre les fenêtres, fais tourner les pièces en 3D.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050507'/%3E%3Cpath d='M16 3C13 9 9 13 9 18a7 7 0 0 0 14 0c0-5-4-9-7-15Z' fill='%23ff2bd6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/os.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<!-- BOOT -->
+<div class="boot" id="boot" aria-hidden="true">
+  <p class="boot__logo">N0VA.OS</p>
+  <div class="boot__lines" id="bootLines"></div>
+</div>
+
+<div class="scanlines" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- BUREAU -->
+<main id="desktop" aria-label="Bureau N0VA.OS">
+
+  <div class="wall" aria-hidden="true">
+    <div class="wall__orb wall__orb--m"></div>
+    <div class="wall__orb wall__orb--c"></div>
+    <div class="wall__grid"></div>
+    <p class="wall__sub">atelier d'impression 3D — fait main</p>
+    <p class="wall__mark glitch" data-text="N0VA.OS">N0VA.OS</p>
+  </div>
+
+  <!-- icônes -->
+  <nav class="dicons" aria-label="Icônes du bureau">
+    <button class="dicon" data-open="win-about">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+      <span>MOI.txt</span>
+    </button>
+    <button class="dicon" data-open="win-shop">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ff2bd6" stroke-width="1.5" aria-hidden="true"><path d="M6 7h12l1.5 13.5a1 1 0 0 1-1 1.1H5.5a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V5a3 3 0 0 1 6 0v5"/></svg>
+      <span>BOUTIQUE.exe</span>
+    </button>
+    <button class="dicon" data-open="win-studio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c8ff00" stroke-width="1.5" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 6v5"/><path d="m9.5 9 2.5 2.5L14.5 9"/><path d="M7 20h10M9 16v4M15 16v4"/></svg>
+      <span>ATELIER.sys</span>
+    </button>
+    <button class="dicon" data-open="win-contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#00f0ff" stroke-width="1.5" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7L22 7"/></svg>
+      <span>CONTACT.exe</span>
+    </button>
+    <button class="dicon" data-open="win-term">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#c8ff00" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="1"/><path d="m6 9 4 3-4 3"/><path d="M12 16h6"/></svg>
+      <span>TERMINAL</span>
+    </button>
+    <button class="dicon dicon--trash" data-open="win-trash">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#9b9bb0" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16"/><path d="M10 11v5M14 11v5"/><path d="M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-.9l1-13"/><path d="M9 7V4h6v3"/></svg>
+      <span>CORBEILLE</span>
+    </button>
+  </nav>
+
+  <!-- post-it drop -->
+  <aside class="sticky" aria-label="Note : drop en cours">
+    <h3>// drop 003</h3>
+    <p><strong>"SIGNAL PERDU"</strong><br>11 pièces en ligne<br>séries ≤ 30 ex.<br>expédition 72h<br><strong>TOTEM 404</strong> en précommande</p>
+  </aside>
+
+  <!-- ============ FENÊTRE MOI.txt ============ -->
+  <section class="win" id="win-about" data-title="moi.txt" role="dialog" aria-label="À propos de l'artiste" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">moi.txt — bloc-notes</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-about" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-about" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body doc">
+      <h3>salut, moi c'est <span>N0VA</span></h3>
+      <p>
+        Je suis artiste 3D. Je <strong>modélise</strong> mes pièces à la main, je les <strong>imprime</strong>
+        couche par couche sur une machine que j'ai retapée moi-même, puis je les
+        <strong>ponce, peins et numérote</strong> une par une sur mon bureau — celui que tu regardes en ce moment.
+      </p>
+      <p>
+        Tout est parti d'un briquet moche en 2022. Je lui ai imprimé une armure.
+        Mes potes en ont voulu une. Puis les potes de mes potes. Voilà.
+      </p>
+      <div class="doc-stats">
+        <div class="doc-stat"><strong>840+</strong><span>pièces expédiées</span></div>
+        <div class="doc-stat"><strong>≤30</strong><span>ex. par série</span></div>
+        <div class="doc-stat"><strong>100%</strong><span>fait main</span></div>
+      </div>
+      <p>
+        Les couches d'impression visibles, je ne les cache pas : c'est la signature du procédé.
+        Quand une série est épuisée, son fichier part à la corbeille (va voir, elle est sur le bureau) —
+        elle ne reviendra jamais à l'identique.
+      </p>
+      <p class="sig">// double-clique sur BOUTIQUE.exe pour voir le drop, ou tape "help" dans le TERMINAL</p>
+      <button class="btn btn--primary" data-open="win-shop" style="margin-top:10px">Ouvrir la boutique</button>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE BOUTIQUE ============ -->
+  <section class="win" id="win-shop" data-title="boutique.exe" role="dialog" aria-label="Boutique" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">boutique.exe — drop 003 "signal perdu"</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-shop" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-shop" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <div class="shop-bar" role="group" aria-label="Filtres">
+        <button class="chip active" data-filter="all" aria-pressed="true">Tout</button>
+        <button class="chip" data-filter="coque" aria-pressed="false">Coques</button>
+        <button class="chip" data-filter="figurine" aria-pressed="false">Figurines</button>
+        <span class="shop-count" id="shopCount" aria-live="polite"></span>
+      </div>
+      <div class="file-grid" id="shopGrid" aria-label="Pièces disponibles"></div>
+      <p class="shop-hint">// clique sur un fichier .obj pour ouvrir sa fiche et le faire tourner en 3D</p>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE PRODUIT ============ -->
+  <section class="win" id="win-product" data-title="produit.obj" role="dialog" aria-label="Fiche produit" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">produit.obj — visionneuse 3D</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-product" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-product" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <div class="pd">
+        <div class="pd__stage">
+          <div id="pdCanvas"></div>
+          <p class="pd__hint">glisser pour pivoter — molette pour zoomer</p>
+        </div>
+        <div>
+          <p class="pd__cat" id="pdCat"></p>
+          <h3 id="pdName"></h3>
+          <p class="pd__price" id="pdPrice"></p>
+          <p class="pd__desc" id="pdDesc"></p>
+          <dl class="pd__specs" id="pdSpecs"></dl>
+          <button class="btn btn--primary" id="pdAdd" data-add="">Ajouter au panier</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE PANIER ============ -->
+  <section class="win" id="win-cart" data-title="panier.exe" role="dialog" aria-label="Panier" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">panier.exe</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-cart" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-cart" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <div id="cartItems"></div>
+      <div class="cart-foot" id="cartFoot"></div>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE ATELIER ============ -->
+  <section class="win" id="win-studio" data-title="atelier.sys" role="dialog" aria-label="L'atelier" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">atelier.sys — processus de fabrication</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-studio" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-studio" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <div class="timeline">
+        <div class="tl-step">
+          <span class="tl-step__num">01</span>
+          <div>
+            <h4>Modélisation</h4>
+            <p>Chaque modèle est sculpté à la main en 3D. Pas de fichiers volés, pas de STL recyclés — du design original, itéré jusqu'à la bonne prise en main.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-step__num">02</span>
+          <div>
+            <h4>Impression</h4>
+            <p>Couche par couche en PLA recyclé, sur une machine calibrée pour des arêtes nettes. Entre 3 et 14 heures par pièce, buse 0,4 mm, 210 °C.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-step__num">03</span>
+          <div>
+            <h4>Finition main</h4>
+            <p>Ébavurage, ponçage, peinture acrylique, assemblage. Jusqu'à 40 minutes par pièce — c'est l'étape qui transforme une impression en objet qu'on garde.</p>
+          </div>
+        </div>
+        <div class="tl-step">
+          <span class="tl-step__num">04</span>
+          <div>
+            <h4>Contrôle &amp; numérotation</h4>
+            <p>Chaque pièce est inspectée puis numérotée à la main sous le socle. Si elle ne me plaît pas, elle repart au broyeur et redevient filament.</p>
+          </div>
+        </div>
+      </div>
+      <p class="studio-note">// emballage : carton recyclé + chutes d'impression broyées en calage. zéro plastique vierge.</p>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE CONTACT ============ -->
+  <section class="win" id="win-contact" data-title="contact.exe" role="dialog" aria-label="Contact" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">contact.exe</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-contact" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-contact" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <div class="contact-links">
+        <a href="mailto:hello@n0va.art">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7L22 7"/></svg>
+          hello@n0va.art
+        </a>
+        <a href="https://instagram.com" rel="noopener" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          @n0va.print
+        </a>
+        <a href="https://tiktok.com" rel="noopener" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M9 12a4 4 0 1 0 4 4V4c.7 2.4 2.4 4 5 4"/></svg>
+          @n0va.print
+        </a>
+      </div>
+      <form class="cform" id="contactForm">
+        <div>
+          <label for="cname">Nom</label>
+          <input type="text" id="cname" name="cname" autocomplete="name" required>
+        </div>
+        <div>
+          <label for="cmail">E-mail</label>
+          <input type="email" id="cmail" name="cmail" autocomplete="email" required>
+        </div>
+        <div>
+          <label for="cmsg">Message (custom ? question ?)</label>
+          <textarea id="cmsg" name="cmsg" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn--primary">Envoyer</button>
+      </form>
+      <form class="news-form" id="newsForm" aria-label="Newsletter">
+        <label class="visually-hidden" for="email">Adresse e-mail pour la newsletter</label>
+        <input type="email" id="email" name="email" placeholder="ton@email.fr — alerte drops" autocomplete="email" required>
+        <button type="submit" class="btn btn--ghost">M'alerter</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE TERMINAL ============ -->
+  <section class="win" id="win-term" data-title="n0va.term" role="dialog" aria-label="Terminal" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">n0va.term — /home/nova/atelier</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-term" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-term" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <div class="term-out" id="termOut" aria-live="polite"></div>
+      <div class="term-in">
+        <label for="termIn">nova@atelier:~$</label>
+        <input type="text" id="termIn" autocomplete="off" spellcheck="false" aria-label="Ligne de commande">
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FENÊTRE CORBEILLE ============ -->
+  <section class="win" id="win-trash" data-title="corbeille" role="dialog" aria-label="Corbeille — séries archivées" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">corbeille — séries archivées</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-trash" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-trash" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body">
+      <p class="trash-note">
+        Ici reposent les séries <strong>épuisées</strong>. Leurs fichiers 3D sont archivés
+        pour toujours — elles ne seront jamais réimprimées. Tu peux encore les regarder tourner.
+      </p>
+      <div class="file-grid" id="trashGrid" aria-label="Séries archivées"></div>
+    </div>
+  </section>
+
+</main>
+
+<!-- TASKBAR -->
+<footer class="taskbar">
+  <button class="tb-start" id="tbStart" aria-expanded="false" aria-controls="startMenu">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C9.5 7 6 10.5 6 15a6 6 0 0 0 12 0c0-4.5-3.5-8-6-13Z"/></svg>
+    N0VA
+  </button>
+  <div class="tb-tabs" id="tbTabs" aria-label="Fenêtres ouvertes"></div>
+  <button class="tb-cart" data-open="win-cart" aria-label="Ouvrir le panier">
+    <span class="lbl">PANIER</span> <span class="cart-badge zero">0</span>
+  </button>
+  <span class="tb-clock" id="tbClock" aria-hidden="true">--:--</span>
+</footer>
+
+<!-- MENU DÉMARRER -->
+<nav class="start-menu" id="startMenu" aria-label="Menu démarrer" hidden>
+  <div class="start-menu__head">
+    N<span>0</span>VA.OS
+    <small>v3.2 — © <span id="year">2026</span> · fait main</small>
+  </div>
+  <nav>
+    <button data-open="win-about">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6Z"/><path d="M14 2v6h6"/></svg>
+      moi.txt — qui je suis
+    </button>
+    <button data-open="win-shop">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M6 7h12l1.5 13.5a1 1 0 0 1-1 1.1H5.5a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V5a3 3 0 0 1 6 0v5"/></svg>
+      boutique.exe — le drop
+    </button>
+    <button data-open="win-studio">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="13" rx="1"/><path d="M12 6v5"/><path d="m9.5 9 2.5 2.5L14.5 9"/></svg>
+      atelier.sys — le processus
+    </button>
+    <button data-open="win-cart">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 3h2l2.7 12.4a1 1 0 0 0 1 .6h8.7a1 1 0 0 0 1-.7L21 8H6"/></svg>
+      panier.exe
+    </button>
+    <button data-open="win-contact">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7L22 7"/></svg>
+      contact.exe
+    </button>
+    <button data-open="win-term">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="1"/><path d="m6 9 4 3-4 3"/><path d="M12 16h6"/></svg>
+      terminal
+    </button>
+    <button data-open="win-trash">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16"/><path d="M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-.9l1-13"/><path d="M9 7V4h6v3"/></svg>
+      corbeille — archives
+    </button>
+  </nav>
+</nav>
+
+<script src="js/products.js" defer></script>
+<script src="js/viewer3d.js" defer></script>
+<script src="js/cart.js" defer></script>
+<script src="js/os.js" defer></script>
+</body>
+</html>
