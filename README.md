@@ -18,6 +18,7 @@ en **3D interactive** (modèles procéduraux Three.js, aucune image à héberger
 | `ATELIER.sys` | Processus de fabrication en 4 étapes |
 | `CONTACT.exe` | Formulaire (mailto) + newsletter |
 | `TERMINAL` | Easter egg : `help`, `ls`, `drops`, `glitch`, `nova`, `open <fenêtre>` |
+| `GAME.exe` | **PRINT.RUN** — endless-runner 3D : pilote la buse sur la grille synthwave, récupère le filament et les vraies pièces du catalogue (en 3D), esquive la corruption. Score + record (localStorage), vies, difficulté croissante, son rétro, clavier + tactile |
 | `CORBEILLE` | Les séries épuisées, archivées pour toujours |
 | Taskbar | Menu démarrer, fenêtres ouvertes, panier, horloge live |
 

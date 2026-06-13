@@ -67,6 +67,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="#c8ff00" stroke-width="1.5" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="1"/><path d="m6 9 4 3-4 3"/><path d="M12 16h6"/></svg>
       <span>TERMINAL</span>
     </button>
+    <button class="dicon" data-open="win-game">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#ff2bd6" stroke-width="1.5" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 12h3M8.5 10.5v3"/><circle cx="16" cy="11" r="1"/><circle cx="18.5" cy="13.5" r="1"/></svg>
+      <span>GAME.exe</span>
+    </button>
     <button class="dicon dicon--trash" data-open="win-trash">
       <svg viewBox="0 0 24 24" fill="none" stroke="#9b9bb0" stroke-width="1.5" aria-hidden="true"><path d="M4 7h16"/><path d="M10 11v5M14 11v5"/><path d="M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-.9l1-13"/><path d="M9 7V4h6v3"/></svg>
       <span>CORBEILLE</span>
@@ -304,6 +308,69 @@
     </div>
   </section>
 
+  <!-- ============ FENÊTRE GAME.exe ============ -->
+  <section class="win" id="win-game" data-title="game.exe" role="dialog" aria-label="PRINT.RUN — jeu 3D" hidden>
+    <div class="win__bar">
+      <span class="win__bar-title">game.exe — print.run</span>
+      <div class="win__ctrl">
+        <button data-minimize="win-game" aria-label="Réduire">─</button>
+        <button class="wc-close" data-close="win-game" aria-label="Fermer">✕</button>
+      </div>
+    </div>
+    <div class="win__body win__body--game">
+      <div class="game-stage" id="gameStage">
+
+        <div class="g-hud" id="gHud" aria-hidden="true">
+          <div class="g-hud__l">
+            <span class="g-stat">SCORE<b id="gScore">0</b></span>
+            <span class="g-stat">RECORD<b id="gBest">0</b></span>
+          </div>
+          <div class="g-hud__r">
+            <span class="g-lives" id="gLives"></span>
+            <button class="g-icbtn" id="gMute" aria-label="Couper le son" aria-pressed="false">♪</button>
+            <button class="g-icbtn" id="gPause" aria-label="Pause">❚❚</button>
+          </div>
+        </div>
+        <div class="g-dist" id="gDist" aria-hidden="true">0 mm</div>
+        <div class="g-pickup" id="gPickup" aria-hidden="true"></div>
+        <div class="g-flash" id="gFlash" aria-hidden="true"></div>
+
+        <div class="g-screen" id="gStart">
+          <h3 class="glitch" data-text="PRINT.RUN">PRINT.RUN</h3>
+          <p>Pilote la <strong>buse</strong> sur la grille. Récupère le filament
+             <span class="g-dot g-dot--c"></span> et tes <strong>pièces</strong>
+             <span class="g-dot g-dot--m"></span>, esquive la corruption
+             <span class="g-dot g-dot--d"></span>.</p>
+          <ul class="g-keys">
+            <li><kbd>◀</kbd><kbd>▶</kbd> changer de voie</li>
+            <li><kbd>ESPACE</kbd> sauter les haies</li>
+            <li><kbd>P</kbd> pause · <kbd>M</kbd> son</li>
+          </ul>
+          <button class="btn btn--primary" id="gStartBtn">Insérer une pièce ▸ JOUER</button>
+        </div>
+
+        <div class="g-screen" id="gOver" hidden>
+          <h3 class="glitch" data-text="BOURRAGE">BOURRAGE</h3>
+          <p>L'impression a planté.<br>Score : <b id="gOverScore">0</b> · Record : <b id="gOverBest">0</b></p>
+          <button class="btn btn--primary" id="gRestart">Réimprimer ▸ REJOUER</button>
+          <button class="btn btn--ghost" data-open="win-shop">Voir les vraies pièces</button>
+        </div>
+
+        <div class="g-screen" id="gPauseScreen" hidden>
+          <h3>PAUSE</h3>
+          <button class="btn btn--primary" id="gResume">Reprendre</button>
+        </div>
+
+        <div class="g-controls" id="gControls" aria-hidden="true">
+          <button data-gmove="left" aria-label="Voie de gauche">◀</button>
+          <button data-gmove="jump" aria-label="Sauter">▲</button>
+          <button data-gmove="right" aria-label="Voie de droite">▶</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- TASKBAR -->
@@ -350,6 +417,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="2" y="3" width="20" height="18" rx="1"/><path d="m6 9 4 3-4 3"/><path d="M12 16h6"/></svg>
       terminal
     </button>
+    <button data-open="win-game">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 12h3M8.5 10.5v3"/><circle cx="16" cy="11" r="1"/><circle cx="18.5" cy="13.5" r="1"/></svg>
+      game.exe — print.run
+    </button>
     <button data-open="win-trash">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" aria-hidden="true"><path d="M4 7h16"/><path d="M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-.9l1-13"/><path d="M9 7V4h6v3"/></svg>
       corbeille — archives
@@ -359,6 +430,7 @@
 
 <script src="js/products.js" defer></script>
 <script src="js/viewer3d.js" defer></script>
+<script src="js/game.js" defer></script>
 <script src="js/cart.js" defer></script>
 <script src="js/os.js" defer></script>
 </body>

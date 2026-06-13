@@ -393,14 +393,33 @@
     };
   }
 
+  /* ---------------- modèle nu (réutilisé par le jeu) ---------------- */
+  function buildModel(id, target) {
+    var p = window.PRODUCT_MAP[id];
+    if (!p || !T || !BUILDERS[p.model]) return null;
+    var model = BUILDERS[p.model](p);
+    var box = new T.Box3().setFromObject(model);
+    var size = box.getSize(new T.Vector3());
+    var maxDim = Math.max(size.x, size.y, size.z) || 1;
+    model.scale.setScalar((target || 1.6) / maxDim);
+    box.setFromObject(model);
+    model.position.sub(box.getCenter(new T.Vector3()));
+    return model;
+  }
+
   /* ---------------- API ---------------- */
   window.View3D = {
     ready: null,
+    THREE: null,
     thumbs: function () { return loadThree().then(generateThumbs); },
-    mount: function (id, host) { return mount(id, host); }
+    mount: function (id, host) { return mount(id, host); },
+    buildModel: buildModel
   };
 
-  window.View3D.ready = loadThree().catch(function (err) {
+  window.View3D.ready = loadThree().then(function () {
+    window.View3D.THREE = T;
+    return true;
+  }).catch(function (err) {
     console.warn("3D indisponible :", err);
     document.body.classList.add("no3d");
     throw err;

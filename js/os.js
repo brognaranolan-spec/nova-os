@@ -45,6 +45,7 @@
       if (!win) return;
       win.setAttribute("data-min", "");
       win.hidden = true;
+      win.dispatchEvent(new CustomEvent("win:minimize"));
       syncTaskbar();
     },
     restore: function (id) {
@@ -52,6 +53,7 @@
       if (!win) return;
       win.hidden = false;
       win.removeAttribute("data-min");
+      win.dispatchEvent(new CustomEvent("win:open"));
       WM.focus(id);
       syncTaskbar();
     },
@@ -368,6 +370,20 @@
     document.getElementById("win-product").addEventListener("win:close", function () {
       if (productHandle) { productHandle.dispose(); productHandle = null; }
     });
+
+    /* cycle de vie du jeu PRINT.RUN */
+    var gw = document.getElementById("win-game");
+    if (gw) {
+      gw.addEventListener("win:open", function () {
+        if (window.NovaGame) window.NovaGame.open(document.getElementById("gameStage"));
+      });
+      gw.addEventListener("win:minimize", function () {
+        if (window.NovaGame) window.NovaGame.pause();
+      });
+      gw.addEventListener("win:close", function () {
+        if (window.NovaGame) window.NovaGame.close();
+      });
+    }
 
     /* formulaire contact */
     var contact = document.getElementById("contactForm");
