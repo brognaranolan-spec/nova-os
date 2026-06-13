@@ -154,6 +154,7 @@
   function openProduct(id) {
     var p = window.PRODUCT_MAP[id];
     if (!p) return;
+    if (window.NovaTrack) window.NovaTrack.event("open", id);
     var win = document.getElementById("win-product");
     win.setAttribute("data-title", p.name.toLowerCase().replace(/\s+/g, "_") + ".obj");
     win.querySelector(".win__bar-title").textContent = win.getAttribute("data-title");

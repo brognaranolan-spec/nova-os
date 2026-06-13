@@ -1,6 +1,9 @@
 /* N0VA.OS — catalogue produits
-   model = clé du générateur 3D dans viewer3d.js */
-window.PRODUCTS = [
+   model = clé du générateur 3D dans viewer3d.js
+   PRODUCTS_DEFAULT = source de vérité publiée. Le dashboard admin peut
+   enregistrer un brouillon dans localStorage (nova_products_override) qui
+   prend le dessus sur CET appareil pour prévisualiser avant publication. */
+window.PRODUCTS_DEFAULT = [
   /* ------------ COQUES DE BRIQUETS ------------ */
   {
     id: "razor-pink", name: "RAZOR PINK",
@@ -117,9 +120,18 @@ window.PRODUCTS = [
   }
 ];
 
-window.PRODUCT_MAP = {};
-window.PRODUCTS.forEach(function (p) { window.PRODUCT_MAP[p.id] = p; });
+/* applique un éventuel brouillon admin (cet appareil uniquement) */
+(function () {
+  var list = window.PRODUCTS_DEFAULT;
+  try {
+    var ov = JSON.parse(localStorage.getItem("nova_products_override"));
+    if (ov && Array.isArray(ov) && ov.length) list = ov;
+  } catch (e) {}
+  window.PRODUCTS = list;
+  window.PRODUCT_MAP = {};
+  window.PRODUCTS.forEach(function (p) { window.PRODUCT_MAP[p.id] = p; });
+})();
 
 window.formatPrice = function (n) {
-  return n.toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
+  return Number(n || 0).toLocaleString("fr-FR", { style: "currency", currency: "EUR" });
 };

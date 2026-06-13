@@ -20,6 +20,17 @@ en **3D interactive** (modèles procéduraux Three.js, aucune image à héberger
 | `TERMINAL` | Easter egg : `help`, `ls`, `drops`, `glitch`, `nova`, `open <fenêtre>` |
 | `GAME.exe` | **PRINT.RUN** — endless-runner 3D : pilote la buse sur la grille synthwave, récupère le filament et les vraies pièces du catalogue (en 3D), esquive la corruption. Score + record (localStorage), vies, difficulté croissante, son rétro, clavier + tactile |
 | `CORBEILLE` | Les séries épuisées, archivées pour toujours |
+
+## Dashboard admin
+
+Page non indexée **`/admin.html`** (à garder pour toi, bookmarke-la) pour piloter le site :
+- **Vue d'ensemble** : KPIs catalogue + trafic.
+- **Produits** : table éditable (prix, stock, badge), ajout/duplication/suppression/réordonnancement, drawer d'édition complet (descriptions, specs).
+- **Studio 3D** : choisir le modèle procédural + couleurs corps/accent par pièce, aperçu 3D live.
+- **Analytics** : vues / fiches ouvertes / ajouts panier / clics « Commander » (collecte locale, sans cookie ni tiers ; voir l'onglet pour brancher GoatCounter en agrégé).
+- **Publier** : génère `products.js` (téléchargement + copie) à redéployer.
+
+Fonctionnement (site statique) : les modifs sont stockées en brouillon (`localStorage: nova_products_override`) et **prévisualisées en direct sur le site, sur cet appareil**. La **publication** = remplacer `js/products.js` par le fichier généré puis redéployer → visible par tous.
 | Taskbar | Menu démarrer, fenêtres ouvertes, panier, horloge live |
 
 Mobile : les fenêtres passent en plein écran, les icônes en grille.

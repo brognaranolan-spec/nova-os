@@ -396,8 +396,14 @@
   /* ---------------- modèle nu (réutilisé par le jeu) ---------------- */
   function buildModel(id, target) {
     var p = window.PRODUCT_MAP[id];
-    if (!p || !T || !BUILDERS[p.model]) return null;
-    var model = BUILDERS[p.model](p);
+    if (!p) return null;
+    return buildSpec(p, target);
+  }
+
+  /* construit depuis une config { model, colors:{body,accent} } — admin/studio */
+  function buildSpec(spec, target) {
+    if (!T || !spec || !BUILDERS[spec.model]) return null;
+    var model = BUILDERS[spec.model]({ colors: spec.colors || { body: 0xff2bd6, accent: 0x00f0ff } });
     var box = new T.Box3().setFromObject(model);
     var size = box.getSize(new T.Vector3());
     var maxDim = Math.max(size.x, size.y, size.z) || 1;
@@ -407,13 +413,70 @@
     return model;
   }
 
+  /* aperçu interactif depuis une config (studio 3D du dashboard) */
+  function previewSpec(spec, host) {
+    if (!T) return null;
+    host.innerHTML = "";
+    var size = Math.min(host.clientWidth || 320, 480);
+    var renderer = new T.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(size, size);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.toneMapping = T.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+    host.appendChild(renderer.domElement);
+    var scene = new T.Scene();
+    scene.environment = makeEnv(renderer);
+    scene.environmentIntensity = 0.5;
+    scene.add(new T.AmbientLight(0x9090b8, 0.55));
+    var key = new T.DirectionalLight(0xffffff, 1.6); key.position.set(3, 5, 4); scene.add(key);
+    var pm = new T.PointLight(0xff2bd6, 26, 0, 2); pm.position.set(-3.2, 1.5, 2.6); scene.add(pm);
+    var pc = new T.PointLight(0x00f0ff, 26, 0, 2); pc.position.set(3.2, -0.8, 2.6); scene.add(pc);
+    var pivot = new T.Group(); scene.add(pivot);
+    var cam = makeCamera(1);
+    var controls = new OrbitControls(cam, renderer.domElement);
+    controls.enableDamping = true; controls.dampingFactor = 0.06; controls.enablePan = false;
+    controls.autoRotate = !REDUCED; controls.autoRotateSpeed = 2.4;
+    function setSpec(s) {
+      for (var i = pivot.children.length - 1; i >= 0; i--) {
+        var c = pivot.children[i];
+        c.traverse(function (o) {
+          if (o.geometry) o.geometry.dispose();
+          if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) { m.dispose && m.dispose(); });
+        });
+        pivot.remove(c);
+      }
+      var m = buildSpec(s, 3.4); if (m) pivot.add(m);
+    }
+    setSpec(spec);
+    var raf;
+    (function loop() { raf = requestAnimationFrame(loop); controls.update(); renderer.render(scene, cam); })();
+    return {
+      update: setSpec,
+      dispose: function () {
+        if (raf) cancelAnimationFrame(raf);
+        controls.dispose();
+        scene.traverse(function (o) {
+          if (o.geometry) o.geometry.dispose();
+          if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(function (m) { m.dispose && m.dispose(); });
+        });
+        renderer.dispose();
+        renderer.forceContextLoss && renderer.forceContextLoss();
+        renderer.domElement.remove();
+      }
+    };
+  }
+
   /* ---------------- API ---------------- */
   window.View3D = {
     ready: null,
     THREE: null,
+    MODELS: ["case-facet", "case-circuit", "case-chrome", "case-hex", "case-wire", "case-drip",
+             "fig-mecha", "fig-runner", "fig-totem", "fig-pup", "fig-idol", "fig-cube"],
     thumbs: function () { return loadThree().then(generateThumbs); },
     mount: function (id, host) { return mount(id, host); },
-    buildModel: buildModel
+    buildModel: buildModel,
+    buildSpec: buildSpec,
+    preview: previewSpec
   };
 
   window.View3D.ready = loadThree().then(function () {

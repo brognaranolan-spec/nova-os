@@ -118,6 +118,7 @@
       "%0D%0ALivraison : " + encodeURIComponent(ship === 0 ? "Offerte" : window.formatPrice(ship)) +
       "%0D%0ATotal : " + encodeURIComponent(window.formatPrice(sub + ship)) +
       "%0D%0A%0D%0AAdresse de livraison :%0D%0A%0D%0A";
+    if (window.NovaTrack) window.NovaTrack.event("checkout");
     window.location.href = "mailto:" + SHOP_EMAIL + "?subject=" +
       encodeURIComponent("Commande N0VA — " + count() + " article(s)") + "&body=" + body;
     window.toast("// récapitulatif ouvert dans ton e-mail");
@@ -138,6 +139,7 @@
       if (!p || p.stock === "out") return;
       items[id] = Math.min(9, (items[id] || 0) + (qty || 1));
       save(); render(); updateBadges();
+      if (window.NovaTrack) window.NovaTrack.event("add", id);
       window.toast("// " + p.name + " ajouté au panier");
     }
   };

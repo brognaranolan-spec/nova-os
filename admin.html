@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>N0VA.OS — Contrôle</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#050507">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23050507'/%3E%3Cpath d='M16 3C13 9 9 13 9 18a7 7 0 0 0 14 0c0-5-4-9-7-15Z' fill='%23ff2bd6'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/os.css?v=4">
+<link rel="stylesheet" href="css/admin.css?v=4">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+  }
+}
+</script>
+</head>
+<body>
+
+<div class="scanlines" aria-hidden="true"></div>
+
+<div class="adm">
+
+  <!-- SIDEBAR -->
+  <aside class="adm-side">
+    <div class="adm-logo">N<span>0</span>VA<span>.</span>OS<small>Contrôle</small></div>
+    <button class="adm-nav active" data-sec="overview">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>
+      Vue d'ensemble
+    </button>
+    <button class="adm-nav" data-sec="products">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 7h12l1.5 13.5a1 1 0 0 1-1 1.1H5.5a1 1 0 0 1-1-1.1L6 7Z"/><path d="M9 10V5a3 3 0 0 1 6 0v5"/></svg>
+      Produits
+    </button>
+    <button class="adm-nav" data-sec="studio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5Z"/><path d="m3 7 9 5 9-5"/><path d="M12 12v10"/></svg>
+      Studio 3D
+    </button>
+    <button class="adm-nav" data-sec="analytics">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M3 3v18h18"/><path d="m7 14 3-4 4 3 4-7"/></svg>
+      Analytics
+    </button>
+    <button class="adm-nav" data-sec="publish">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+      Publier
+    </button>
+    <div class="adm-side__foot">
+      <a href="index.html" target="_blank" rel="noopener">↗ Ouvrir le site</a>
+      <a href="#" id="resetDraft">⟲ Annuler le brouillon</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="adm-main">
+    <div class="adm-topbar">
+      <div>
+        <h1 id="secTitle">Vue d'ensemble</h1>
+        <p id="secSub">Pilotage du catalogue, des modèles 3D et du trafic.</p>
+      </div>
+      <span class="adm-status clean" id="status"><span class="dot"></span><span id="statusTxt">Aucun brouillon</span></span>
+    </div>
+
+    <!-- ============ VUE D'ENSEMBLE ============ -->
+    <section class="adm-section active" id="sec-overview">
+      <div class="kpis" id="kpiCatalog"></div>
+      <h2 class="adm-h2">Trafic (cet appareil)</h2>
+      <div class="kpis" id="kpiTraffic"></div>
+      <div class="note">
+        <strong>ⓘ</strong> Les chiffres de trafic sont collectés en local (ce navigateur), sans cookie ni tiers.
+        Pour des statistiques <strong>agrégées multi-visiteurs</strong>, voir l'onglet Analytics → « Brancher des analytics réelles ».
+      </div>
+    </section>
+
+    <!-- ============ PRODUITS ============ -->
+    <section class="adm-section" id="sec-products">
+      <div class="toolbar">
+        <button class="btn btn--primary btn-sm" id="addProduct">+ Nouvelle pièce</button>
+        <button class="btn btn--ghost btn-sm" data-sec-link="publish">Publier les changements</button>
+        <span style="font-family:var(--font-mono);font-size:11px;color:var(--txt-2)" id="prodCount"></span>
+      </div>
+      <div class="panel" style="padding:8px 12px;overflow-x:auto">
+        <table class="ptable">
+          <thead><tr>
+            <th>3D</th><th>Pièce</th><th>Cat.</th><th>Prix</th><th>Stock</th><th>Badge</th><th></th>
+          </tr></thead>
+          <tbody id="prodRows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ STUDIO 3D ============ -->
+    <section class="adm-section" id="sec-studio">
+      <div class="toolbar">
+        <label class="flbl" style="margin:0">Pièce&nbsp;:</label>
+        <select class="field-select" id="studioPick" style="max-width:280px"></select>
+      </div>
+      <div class="studio-tab">
+        <div class="studio-tab__preview" id="studioStage"></div>
+        <div>
+          <h2 class="adm-h2" style="margin-top:0">Modèle</h2>
+          <div class="model-grid" id="studioModels"></div>
+          <h2 class="adm-h2">Couleurs</h2>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div>
+              <label class="flbl">Corps</label>
+              <div class="color-row"><input type="color" id="studioBody"><span id="studioBodyHex" style="font-family:var(--font-mono);font-size:12px;color:var(--txt-2)"></span></div>
+            </div>
+            <div>
+              <label class="flbl">Accent / néon</label>
+              <div class="color-row"><input type="color" id="studioAccent"><span id="studioAccentHex" style="font-family:var(--font-mono);font-size:12px;color:var(--txt-2)"></span></div>
+              <div class="swatches" id="studioSwatches"></div>
+            </div>
+            <button class="btn btn--primary btn-sm" id="studioApply">Appliquer à la pièce</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ANALYTICS ============ -->
+    <section class="adm-section" id="sec-analytics">
+      <div class="kpis" id="kpiTraffic2"></div>
+      <h2 class="adm-h2">Vues — 14 derniers jours</h2>
+      <div class="panel">
+        <div class="chart" id="viewsChart"></div>
+        <div class="chart-x" id="viewsChartX"></div>
+      </div>
+      <h2 class="adm-h2">Pièces les plus consultées</h2>
+      <div class="panel" style="padding:8px 12px;overflow-x:auto">
+        <table class="ptable">
+          <thead><tr><th>Pièce</th><th>Ouvertures</th><th>Ajouts panier</th><th>Taux</th></tr></thead>
+          <tbody id="topProducts"></tbody>
+        </table>
+      </div>
+      <div class="toolbar" style="margin-top:16px">
+        <button class="btn btn--ghost btn-sm" id="refreshStats">⟳ Rafraîchir</button>
+        <button class="icon-btn danger" id="resetStats" title="Réinitialiser les données locales" style="width:auto;padding:0 14px;font-family:var(--font-mono);font-size:11px">vider les stats locales</button>
+      </div>
+      <div class="note">
+        <strong>Brancher des analytics réelles (agrégées, multi-visiteurs)</strong><br>
+        1. Crée un compte gratuit sur <strong>GoatCounter</strong> (goatcounter.com) ou <strong>Plausible</strong>.<br>
+        2. Donne-moi le code de ton site → je colle le script de suivi dans le site (2 min).<br>
+        3. Les vrais chiffres s'affichent alors dans leur tableau de bord. Les <strong>achats</strong> passent par e-mail (mailto) ;
+        pour les compter automatiquement, on peut brancher un formulaire (Formspree) qui fournit le nombre d'envois.
+      </div>
+    </section>
+
+    <!-- ============ PUBLIER ============ -->
+    <section class="adm-section" id="sec-publish">
+      <div class="toolbar">
+        <button class="btn btn--primary btn-sm" id="genFile">⟳ Générer products.js</button>
+        <button class="btn btn--ghost btn-sm" id="downloadFile">⬇ Télécharger</button>
+        <button class="btn btn--ghost btn-sm" id="copyFile">⧉ Copier</button>
+        <span id="diffStatus" style="font-family:var(--font-mono);font-size:11px;color:var(--txt-2)"></span>
+      </div>
+      <textarea class="code-box" id="codeOut" spellcheck="false" readonly></textarea>
+      <h2 class="adm-h2">Mettre en ligne</h2>
+      <ol class="steps-list">
+        <li>Tes modifications sont déjà visibles en <strong>aperçu sur le site</strong> depuis ce navigateur (recharge <code>index.html</code>).</li>
+        <li>Clique <strong>Télécharger</strong> : tu obtiens le fichier <code>products.js</code> à jour.</li>
+        <li>Remplace <code>js/products.js</code> du projet par ce fichier, puis redéploie (ou demande-moi de pousser la mise en ligne).</li>
+        <li>En ~1 min, les changements sont visibles par <strong>tous les visiteurs</strong>.</li>
+      </ol>
+      <div class="note">
+        <strong>ⓘ Aperçu vs publication.</strong> « Aperçu » = visible seulement sur cet appareil (brouillon local).
+        « Publication » = le fichier <code>products.js</code> déployé, vu par tout le monde. Le bandeau en haut indique si un brouillon est en attente.
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- DRAWER ÉDITION PRODUIT -->
+<div class="drawer-scrim" id="drawerScrim" hidden></div>
+<aside class="pdrawer" id="pdrawer" hidden aria-label="Édition produit">
+  <div class="pdrawer__head">
+    <h3 id="drawerTitle">Éditer</h3>
+    <button class="icon-btn" id="drawerClose" aria-label="Fermer"><svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+  </div>
+  <div class="pdrawer__body" id="drawerBody"><!-- rempli par JS --></div>
+  <div class="pdrawer__foot">
+    <button class="btn btn--primary btn-sm" id="drawerSave" style="flex:1">Enregistrer</button>
+    <button class="btn btn--ghost btn-sm" id="drawerCancel">Annuler</button>
+  </div>
+</aside>
+
+<div class="adm-toast" id="admToast" role="status" aria-live="polite"></div>
+
+<script src="js/products.js?v=4"></script>
+<script src="js/viewer3d.js?v=4"></script>
+<script src="js/admin.js?v=4" type="module"></script>
+</body>
+</html>
