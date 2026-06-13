@@ -431,6 +431,10 @@ body.mega-glitch #desktop{animation:megaGlitch .15s steps(2) 6}
 .g-dot--c{background:var(--cyan);box-shadow:var(--glow-c)}
 .g-dot--m{background:var(--magenta);box-shadow:var(--glow-m)}
 .g-dot--d{background:var(--danger)}
+.g-spinner{width:42px;height:42px;border:3px solid rgba(0,240,255,.2);border-top-color:var(--cyan);
+  border-radius:50%;animation:gSpin .8s linear infinite}
+@keyframes gSpin{to{transform:rotate(360deg)}}
+#gBootMsg{font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;color:var(--txt-2);max-width:360px}
 
 .g-controls{position:absolute;bottom:14px;left:0;right:0;z-index:4;
   display:none;justify-content:center;gap:14px;pointer-events:none}

@@ -363,6 +363,7 @@
      ÉTATS
      ============================================================ */
   function startGame() {
+    if (!inst) return;                 // pas encore construit : on ignore
     initAudio();
     var p = inst;
     p.objs.forEach(function (o) { p.scene.remove(o); });
@@ -396,7 +397,11 @@
     e.innerHTML = s;
   }
   function showScreen(id) {
-    ["gStart", "gOver", "gPauseScreen"].forEach(function (s) { var e = $(s); if (e) e.hidden = (s !== id); });
+    ["gBoot", "gStart", "gOver", "gPauseScreen"].forEach(function (s) { var e = $(s); if (e) e.hidden = (s !== id); });
+  }
+  function showBoot(msg) {
+    var m = $("gBootMsg"); if (m) m.textContent = msg;
+    showScreen("gBoot");
   }
   function hideScreens() { showScreen(null); }
   var labelT = null;
@@ -516,16 +521,17 @@
     open: function (stage) {
       if (!stage) return;
       if (inst) { this.resume(); return; }
-      stage.querySelector(".g-loading") || (function () {
-        var l = document.createElement("p"); l.className = "g-loading"; l.textContent = "chargement du moteur 3D…";
-        stage.appendChild(l);
-      })();
+      showBoot("Initialisation du moteur 3D…");
+      if (!window.View3D || !window.View3D.ready) {
+        showBoot("Moteur 3D introuvable. Recharge la page (Ctrl+Maj+R).");
+        return;
+      }
       window.View3D.ready.then(function () {
         T = window.View3D.THREE;
-        var l = stage.querySelector(".g-loading"); if (l) l.remove();
-        if (!inst) build(stage);
+        if (!T) { showBoot("Le moteur 3D n'a pas pu démarrer. Recharge la page (Ctrl+Maj+R)."); return; }
+        if (!inst) build(stage);            // build() affiche l'écran START à la fin
       }).catch(function () {
-        var l = stage.querySelector(".g-loading"); if (l) l.textContent = "3D indisponible sur ce navigateur.";
+        showBoot("3D indisponible sur ce navigateur. Essaie un navigateur à jour (Chrome, Firefox, Edge…).");
       });
     },
     pause: function () {
