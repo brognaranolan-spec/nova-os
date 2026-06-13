@@ -23,6 +23,9 @@
   --taskbar-h:52px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
+/* l'attribut hidden doit TOUJOURS masquer, même sur les éléments en display:flex
+   (.win, .g-screen…) — sinon les fenêtres/écrans cachés restent visibles */
+[hidden]{display:none!important}
 html,body{height:100%}
 body{
   background:var(--bg);color:var(--txt);

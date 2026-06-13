@@ -446,7 +446,7 @@
   }
 
   function togglePause() {
-    if (!inst || inst.mode !== "playing") return;
+    if (!inst || (inst.mode !== "playing" && inst.mode !== "paused")) return;
     inst.userPaused = !inst.userPaused;
     if (inst.userPaused) { inst.mode = "paused"; showScreen("gPauseScreen"); }
     else { inst.mode = "playing"; hideScreens(); }
